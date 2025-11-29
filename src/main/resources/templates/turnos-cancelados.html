@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnos Cancelados - Mascotas Felices</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🐾</span>
+                <h2>Mascotas Felices</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/servicios">Servicios</a></li>
+                <li><a href="/turnos/nuevo">Agendar Turno</a></li>
+                <li><a href="/turnos/lista" class="active">Ver Turnos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="lista-section">
+        <div class="container">
+            <div class="lista-header">
+                <div>
+                    <h1>Reporte de Turnos Cancelados</h1>
+                    <p>Consulta los turnos cancelados por período de tiempo</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/turnos/lista" class="btn btn-secondary">← Volver a Turnos</a>
+                </div>
+            </div>
+
+            <!-- Formulario de filtro -->
+            <div class="filter-card">
+                <form action="/turnos/cancelados" method="get" class="filter-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fechaInicio">Fecha Inicio</label>
+                            <input type="date" 
+                                   id="fechaInicio" 
+                                   name="fechaInicio" 
+                                   class="form-control"
+                                   th:value="${fechaInicio}"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha Fin</label>
+                            <input type="date" 
+                                   id="fechaFin" 
+                                   name="fechaFin" 
+                                   class="form-control"
+                                   th:value="${fechaFin}"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary">
+                                🔍 Buscar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Resultados -->
+            <div th:if="${turnosCancelados != null}">
+                <div class="results-header">
+                    <h2>Resultados de la Búsqueda</h2>
+                    <p>
+                        Mostrando <strong th:text="${#lists.size(turnosCancelados)}">0</strong> 
+                        turnos cancelados entre 
+                        <strong th:text="${fechaInicio}"></strong> y 
+                        <strong th:text="${fechaFin}"></strong>
+                    </p>
+                    <button onclick="window.print()" class="btn btn-secondary">
+                        🖨️ Imprimir Reporte
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="turnos-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Mascota</th>
+                                <th>Especie</th>
+                                <th>Dueño</th>
+                                <th>Teléfono</th>
+                                <th>Veterinario</th>
+                                <th>Fecha Programada</th>
+                                <th>Fecha Cancelación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(turnosCancelados)}">
+                                <td colspan="8" class="empty-message">
+                                    <div class="empty-state">
+                                        <span class="empty-icon">📭</span>
+                                        <h3>No se encontraron turnos cancelados</h3>
+                                        <p>No hay turnos cancelados en el período seleccionado</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:each="turno : ${turnosCancelados}" class="row-cancelled">
+                                <td th:text="${turno.id}">1</td>
+                                <td>
+                                    <strong th:text="${turno.nombreAnimal}">Max</strong>
+                                </td>
+                                <td>
+                                    <span class="badge badge-especie" th:text="${turno.especie}">Perro</span>
+                                </td>
+                                <td th:text="${turno.nombreDueno}">Juan Pérez</td>
+                                <td th:text="${turno.telefono}">3001234567</td>
+                                <td th:text="${turno.veterinario}">Dra. López</td>
+                                <td>
+                                    <div class="fecha-info">
+                                        <span th:text="${#temporals.format(turno.fechaHora, 'dd/MM/yyyy')}">
+                                            01/01/2024
+                                        </span>
+                                        <small th:text="${#temporals.format(turno.fechaHora, 'HH:mm')}">
+                                            10:00
+                                        </small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fecha-info">
+                                        <span th:text="${#temporals.format(turno.fechaCancelacion, 'dd/MM/yyyy')}">
+                                            01/01/2024
+                                        </span>
+                                        <small th:text="${#temporals.format(turno.fechaCancelacion, 'HH:mm')}">
+                                            10:00
+                                        </small>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Resumen para impresión -->
+                <div class="print-summary">
+                    <h3>Resumen del Reporte</h3>
+                    <p>Total de turnos cancelados: <strong th:text="${#lists.size(turnosCancelados)}">0</strong></p>
+                    <p>Período: <strong th:text="${fechaInicio}"></strong> a <strong th:text="${fechaFin}"></strong></p>
+                    <p>Fecha de generación: <strong th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy HH:mm')}"></strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mascotas Felices</h3>
+                    <p>Cuidando de tus mascotas desde 2020</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p>📞 (555) 123-4567</p>
+                    <p>📧 info@mascotasfelices.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mascotas Felices. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

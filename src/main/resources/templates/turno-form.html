@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${edicion} ? 'Editar Turno' : 'Agendar Turno'">Agendar Turno</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🐾</span>
+                <h2>Mascotas Felices</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/servicios">Servicios</a></li>
+                <li><a href="/turnos/nuevo" class="active">Agendar Turno</a></li>
+                <li><a href="/turnos/lista">Ver Turnos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1 th:text="${edicion} ? 'Modificar Turno' : 'Agendar Nuevo Turno'">
+                        Agendar Nuevo Turno
+                    </h1>
+                    <p>Completa todos los campos para registrar el turno de tu mascota</p>
+                </div>
+
+                <!-- Mensajes de error -->
+                <div class="alert alert-danger" th:if="${error}">
+                    <strong>❌ Error:</strong> <span th:text="${error}"></span>
+                </div>
+
+                <form th:action="${edicion} ? @{/turnos/actualizar/{id}(id=${turno.id})} : @{/turnos/guardar}" 
+                      method="post" 
+                      th:object="${turno}" 
+                      class="turno-form">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombreAnimal">Nombre de la Mascota *</label>
+                            <input type="text" 
+                                   id="nombreAnimal" 
+                                   th:field="*{nombreAnimal}" 
+                                   class="form-control"
+                                   placeholder="Ej: Max"
+                                   required>
+                            <span class="error-message" th:if="${#fields.hasErrors('nombreAnimal')}" 
+                                  th:errors="*{nombreAnimal}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="especie">Especie *</label>
+                            <select id="especie" 
+                                    th:field="*{especie}" 
+                                    class="form-control"
+                                    required>
+                                <option value="">Seleccione una especie</option>
+                                <option th:each="esp : ${especies}" 
+                                        th:value="${esp}" 
+                                        th:text="${esp}"></option>
+                            </select>
+                            <span class="error-message" th:if="${#fields.hasErrors('especie')}" 
+                                  th:errors="*{especie}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombreDueno">Nombre del Dueño *</label>
+                            <input type="text" 
+                                   id="nombreDueno" 
+                                   th:field="*{nombreDueno}" 
+                                   class="form-control"
+                                   placeholder="Ej: Juan Pérez"
+                                   required>
+                            <span class="error-message" th:if="${#fields.hasErrors('nombreDueno')}" 
+                                  th:errors="*{nombreDueno}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono de Contacto *</label>
+                            <input type="tel" 
+                                   id="telefono" 
+                                   th:field="*{telefono}" 
+                                   class="form-control"
+                                   placeholder="Ej: 3001234567"
+                                   pattern="[0-9]{10}"
+                                   required>
+                            <small class="form-hint">Debe contener 10 dígitos</small>
+                            <span class="error-message" th:if="${#fields.hasErrors('telefono')}" 
+                                  th:errors="*{telefono}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="veterinario">Veterinario *</label>
+                            <select id="veterinario" 
+                                    th:field="*{veterinario}" 
+                                    class="form-control"
+                                    required>
+                                <option value="">Seleccione un veterinario</option>
+                                <option th:each="vet : ${veterinarios}" 
+                                        th:value="${vet}" 
+                                        th:text="${vet}"></option>
+                            </select>
+                            <span class="error-message" th:if="${#fields.hasErrors('veterinario')}" 
+                                  th:errors="*{veterinario}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaHora">Fecha y Hora *</label>
+                            <input type="datetime-local" 
+                                   id="fechaHora" 
+                                   th:field="*{fechaHora}" 
+                                   class="form-control"
+                                   th:min="${#temporals.format(fechaMinima, 'yyyy-MM-dd''T''HH:mm')}"
+                                   required>
+                            <small class="form-hint">La fecha no puede ser anterior a hoy</small>
+                            <span class="error-message" th:if="${#fields.hasErrors('fechaHora')}" 
+                                  th:errors="*{fechaHora}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-info-box">
+                        <h4>📋 Información Importante</h4>
+                        <ul>
+                            <li>No se pueden agendar dos turnos con el mismo veterinario en el mismo horario</li>
+                            <li>Los perros y gatos no pueden coincidir en la misma hora</li>
+                            <li>Cada dueño puede registrar máximo 2 turnos por día</li>
+                            <li>Si el horario está ocupado, el sistema sugerirá uno disponible</li>
+                        </ul>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <span th:text="${edicion} ? '✓ Actualizar Turno' : '✓ Agendar Turno'">
+                                ✓ Agendar Turno
+                            </span>
+                        </button>
+                        <a href="/turnos/lista" class="btn btn-secondary">← Volver a la Lista</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mascotas Felices</h3>
+                    <p>Cuidando de tus mascotas desde 2020</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p>📞 (555) 123-4567</p>
+                    <p>📧 info@mascotasfelices.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mascotas Felices. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

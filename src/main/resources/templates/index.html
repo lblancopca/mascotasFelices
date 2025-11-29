@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascotas Felices - Clínica Veterinaria</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🐾</span>
+                <h2>Mascotas Felices</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="active">Inicio</a></li>
+                <li><a href="/servicios">Servicios</a></li>
+                <li><a href="/turnos/nuevo">Agendar Turno</a></li>
+                <li><a href="/turnos/lista">Ver Turnos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bienvenidos a Mascotas Felices</h1>
+            <p class="hero-subtitle">Cuidamos de tus mascotas con amor y profesionalismo</p>
+            <div class="hero-buttons">
+                <a href="/turnos/nuevo" class="btn btn-primary">Agendar Turno</a>
+                <a href="/servicios" class="btn btn-secondary">Nuestros Servicios</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-illustration">
+                <span class="emoji-large">🐶</span>
+                <span class="emoji-large">🐱</span>
+                <span class="emoji-large">🐦</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">¿Por qué elegirnos?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍⚕️</div>
+                    <h3>Profesionales Expertos</h3>
+                    <p>Contamos con veterinarios altamente capacitados y con amplia experiencia</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Instalaciones Modernas</h3>
+                    <p>Equipamiento de última generación para el mejor cuidado</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3>Atención Personalizada</h3>
+                    <p>Cada mascota recibe el cuidado individual que merece</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Sistema de Turnos Online</h3>
+                    <p>Agenda tu cita de forma rápida y sencilla desde cualquier lugar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <div class="container">
+            <h2 class="section-title">Nuestro Equipo</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">👩‍⚕️</div>
+                    <h3>Dra. López</h3>
+                    <p>Especialista en Medicina General</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👨‍⚕️</div>
+                    <h3>Dr. Ramírez</h3>
+                    <p>Especialista en Cirugía</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👩‍⚕️</div>
+                    <h3>Dra. Martínez</h3>
+                    <p>Especialista en Dermatología</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👨‍⚕️</div>
+                    <h3>Dr. González</h3>
+                    <p>Especialista en Aves Exóticas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>¿Listo para cuidar de tu mascota?</h2>
+            <p>Agenda tu turno ahora y brinda a tu compañero el mejor cuidado</p>
+            <a href="/turnos/nuevo" class="btn btn-primary btn-large">Agendar Turno Ahora</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mascotas Felices</h3>
+                    <p>Cuidando de tus mascotas desde 2020</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p>📞 (555) 123-4567</p>
+                    <p>📧 info@mascotasfelices.com</p>
+                    <p>📍 Calle Principal 123, Ciudad</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Horarios</h3>
+                    <p>Lunes a Viernes: 8:00 - 20:00</p>
+                    <p>Sábados: 9:00 - 14:00</p>
+                    <p>Domingos: Cerrado</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mascotas Felices. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Mascotas Felices</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🐾</span>
+                <h2>Mascotas Felices</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/servicios" class="active">Servicios</a></li>
+                <li><a href="/turnos/nuevo">Agendar Turno</a></li>
+                <li><a href="/turnos/lista">Ver Turnos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Nuestros Servicios</h1>
+            <p>Ofrecemos atención integral para el bienestar de tu mascota</p>
+        </div>
+    </section>
+
+    <section class="services-section">
+        <div class="container">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🩺</div>
+                    <h3>Consulta General</h3>
+                    <p>Exámenes de rutina, diagnóstico y tratamiento de enfermedades comunes. Nuestros veterinarios evaluarán el estado de salud general de tu mascota.</p>
+                    <ul class="service-features">
+                        <li>Examen físico completo</li>
+                        <li>Diagnóstico de enfermedades</li>
+                        <li>Plan de tratamiento personalizado</li>
+                        <li>Seguimiento continuo</li>
+                    </ul>
+                    <div class="service-price">Desde $50.000</div>
+                </div>
+
+                <div class="service-card featured">
+                    <div class="service-badge">Popular</div>
+                    <div class="service-icon">💉</div>
+                    <h3>Vacunación y Prevención</h3>
+                    <p>Protege a tu mascota con nuestro completo programa de vacunación y prevención de enfermedades. Incluye desparasitación y control de pulgas.</p>
+                    <ul class="service-features">
+                        <li>Vacunas múltiples y antirrábica</li>
+                        <li>Desparasitación interna y externa</li>
+                        <li>Control de pulgas y garrapatas</li>
+                        <li>Calendario de vacunación</li>
+                    </ul>
+                    <div class="service-price">Desde $30.000</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔬</div>
+                    <h3>Laboratorio Clínico</h3>
+                    <p>Contamos con laboratorio propio para análisis de sangre, orina, heces y otros estudios necesarios para un diagnóstico preciso.</p>
+                    <ul class="service-features">
+                        <li>Hemogramas completos</li>
+                        <li>Análisis bioquímicos</li>
+                        <li>Coproscópicos</li>
+                        <li>Resultados en 24-48 horas</li>
+                    </ul>
+                    <div class="service-price">Desde $40.000</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔪</div>
+                    <h3>Cirugía</h3>
+                    <p>Realizamos cirugías de baja y alta complejidad con tecnología de punta y personal altamente capacitado para garantizar la seguridad de tu mascota.</p>
+                    <ul class="service-features">
+                        <li>Esterilización (castración)</li>
+                        <li>Cirugías de tejidos blandos</li>
+                        <li>Cirugías ortopédicas</li>
+                        <li>Quirófano equipado</li>
+                    </ul>
+                    <div class="service-price">Desde $150.000</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🦷</div>
+                    <h3>Odontología</h3>
+                    <p>Cuidado dental especializado para prevenir y tratar enfermedades bucales. La salud dental es fundamental para el bienestar general.</p>
+                    <ul class="service-features">
+                        <li>Limpieza dental profunda</li>
+                        <li>Extracción de piezas dentales</li>
+                        <li>Tratamiento de gingivitis</li>
+                        <li>Profilaxis dental</li>
+                    </ul>
+                    <div class="service-price">Desde $80.000</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📸</div>
+                    <h3>Imagenología</h3>
+                    <p>Diagnóstico por imágenes con equipos de última generación para detectar problemas internos de manera no invasiva.</p>
+                    <ul class="service-features">
+                        <li>Radiografías digitales</li>
+                        <li>Ecografías</li>
+                        <li>Diagnóstico preciso</li>
+                        <li>Resultados inmediatos</li>
+                    </ul>
+                    <div class="service-price">Desde $60.000</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏥</div>
+                    <h3>Hospitalización</h3>
+                    <p>Instalaciones cómodas y seguras para mascotas que requieren cuidados especiales y monitoreo constante durante su recuperación.</p>
+                    <ul class="service-features">
+                        <li>Monitoreo 24/7</li>
+                        <li>Cuidados intensivos</li>
+                        <li>Ambiente controlado</li>
+                        <li>Personal especializado</li>
+                    </ul>
+                    <div class="service-price">Desde $100.000/día</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">✂️</div>
+                    <h3>Peluquería</h3>
+                    <p>Servicios de estética y belleza para mantener a tu mascota limpia, saludable y con un aspecto impecable.</p>
+                    <ul class="service-features">
+                        <li>Baño medicado o cosmético</li>
+                        <li>Corte de pelo</li>
+                        <li>Corte de uñas</li>
+                        <li>Limpieza de oídos</li>
+                    </ul>
+                    <div class="service-price">Desde $35.000</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🚨</div>
+                    <h3>Urgencias</h3>
+                    <p>Atención de emergencias las 24 horas del día. Nuestro equipo está listo para atender cualquier situación crítica.</p>
+                    <ul class="service-features">
+                        <li>Atención inmediata</li>
+                        <li>Equipo de emergencias</li>
+                        <li>Disponible 24/7</li>
+                        <li>Estabilización rápida</li>
+                    </ul>
+                    <div class="service-price">Consultar</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>¿Necesitas alguno de nuestros servicios?</h2>
+            <p>Agenda tu turno ahora y recibe la mejor atención veterinaria</p>
+            <a href="/turnos/nuevo" class="btn btn-primary btn-large">Agendar Turno</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mascotas Felices</h3>
+                    <p>Cuidando de tus mascotas desde 2020</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p>📞 (555) 123-4567</p>
+                    <p>📧 info@mascotasfelices.com</p>
+                    <p>📍 Calle Principal 123, Ciudad</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Horarios</h3>
+                    <p>Lunes a Viernes: 8:00 - 20:00</p>
+                    <p>Sábados: 9:00 - 14:00</p>
+                    <p>Domingos: Cerrado</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mascotas Felices. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

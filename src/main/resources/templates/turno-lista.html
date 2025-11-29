@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Turnos - Mascotas Felices</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🐾</span>
+                <h2>Mascotas Felices</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/servicios">Servicios</a></li>
+                <li><a href="/turnos/nuevo">Agendar Turno</a></li>
+                <li><a href="/turnos/lista" class="active">Ver Turnos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="lista-section">
+        <div class="container">
+            <div class="lista-header">
+                <div>
+                    <h1>Lista de Turnos</h1>
+                    <p>Gestiona todos los turnos registrados en el sistema</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/turnos/nuevo" class="btn btn-primary">+ Nuevo Turno</a>
+                    <a href="/turnos/cancelados" class="btn btn-secondary">📋 Ver Cancelados</a>
+                </div>
+            </div>
+            
+            <!-- Mensajes -->
+            <div class="alert alert-success" th:if="${mensaje}">
+                <strong>✓ Éxito:</strong> <span th:text="${mensaje}"></span>
+            </div>
+            <div class="alert alert-danger" th:if="${error}">
+                <strong>❌ Error:</strong> <span th:text="${error}"></span>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-info">
+                        <h3 th:text="${#lists.size(turnos)}">0</h3>
+                        <p>Total de Turnos</p>
+                    </div>
+                </div>
+                <div class="stat-card stat-success">
+                    <div class="stat-icon">✓</div>
+                    <div class="stat-info">
+                        <h3 th:text="${turnos.?[estado == 'ACTIVO'].size()}">0</h3>
+                        <p>Turnos Activos</p>
+                    </div>
+                </div>
+                <div class="stat-card stat-warning">
+                    <div class="stat-icon">✏️</div>
+                    <div class="stat-info">
+                        <!--<h3 th:text="${#lists.size(#lists.select(turnos, turno => turno.estado == 'MODIFICADO'))}">0</h3>-->
+                        <h3 th:text="${turnos.?[estado == 'MODIFICADO'].size()}">0</h3>
+                        <p>Turnos Modificados</p>
+                    </div>
+                </div>
+                <div class="stat-card stat-danger">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <!--<h3 th:text="${#lists.size(#lists.select(turnos, turno => turno.estado == 'CANCELADO'))}">0</h3>-->
+                        <h3 th:text="${turnos.?[estado == 'CANCELADO'].size()}">0</h3>
+                        <p>Turnos Cancelados</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de turnos -->
+            <div class="table-container">
+                <table class="turnos-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Mascota</th>
+                            <th>Especie</th>
+                            <th>Dueño</th>
+                            <th>Teléfono</th>
+                            <th>Veterinario</th>
+                            <th>Fecha y Hora</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(turnos)}">
+                            <td colspan="9" class="empty-message">
+                                <div class="empty-state">
+                                    <span class="empty-icon">📭</span>
+                                    <h3>No hay turnos registrados</h3>
+                                    <p>Comienza agendando el primer turno</p>
+                                    <a href="/turnos/nuevo" class="btn btn-primary">Agendar Turno</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:each="turno : ${turnos}" 
+                            th:class="${turno.estado == 'CANCELADO'} ? 'row-cancelled' : ''">
+                            <td th:text="${turno.id}">1</td>
+                            <td>
+                                <strong th:text="${turno.nombreAnimal}">Max</strong>
+                            </td>
+                            <td>
+                                <span class="badge badge-especie" th:text="${turno.especie}">Perro</span>
+                            </td>
+                            <td th:text="${turno.nombreDueno}">Juan Pérez</td>
+                            <td th:text="${turno.telefono}">3001234567</td>
+                            <td th:text="${turno.veterinario}">Dra. López</td>
+                            <td>
+                                <div class="fecha-info">
+                                    <span th:text="${#temporals.format(turno.fechaHora, 'dd/MM/yyyy')}">
+                                        01/01/2024
+                                    </span>
+                                    <small th:text="${#temporals.format(turno.fechaHora, 'HH:mm')}">
+                                        10:00
+                                    </small>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge" 
+                                      th:classappend="${turno.estado == 'ACTIVO'} ? 'badge-success' : 
+                                                      (${turno.estado == 'MODIFICADO'} ? 'badge-warning' : 'badge-danger')"
+                                      th:text="${turno.estado}">
+                                    ACTIVO
+                                </span>
+                                <small th:if="${turno.estado == 'MODIFICADO'}" class="modificado-info">
+                                    Modificado el <span th:text="${#temporals.format(turno.fechaModificacion, 'dd/MM HH:mm')}"></span>
+                                </small>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a th:if="${turno.estado == 'ACTIVO' || turno.estado == 'MODIFICADO'}" 
+                                       th:href="@{/turnos/editar/{id}(id=${turno.id})}" 
+                                       class="btn-action btn-edit"
+                                       title="Editar turno">
+                                        ✏️
+                                    </a>
+                                    <form th:if="${turno.estado == 'ACTIVO' || turno.estado == 'MODIFICADO'}" 
+                                          th:action="@{/turnos/cancelar/{id}(id=${turno.id})}" 
+                                          method="post" 
+                                          style="display: inline;"
+                                          onsubmit="return confirm('¿Está seguro de cancelar este turno?');">
+                                        <button type="submit" 
+                                                class="btn-action btn-delete"
+                                                title="Cancelar turno">
+                                            ❌
+                                        </button>
+                                    </form>
+                                    <span th:if="${turno.estado == 'CANCELADO'}" 
+                                          class="text-muted">
+                                        Sin acciones
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mascotas Felices</h3>
+                    <p>Cuidando de tus mascotas desde 2020</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p>📞 (555) 123-4567</p>
+                    <p>📧 info@mascotasfelices.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mascotas Felices. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
